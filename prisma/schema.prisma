@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String     @id @default(uuid())
+  email       String     @unique
+  password    String
+  experiencia Int        @default(0)
+  monedas     Int        @default(0)
+  settings    Json?
+  simulacros  Simulacro[]
+}
+
+model Simulacro {
+  id         String      @id @default(uuid())
+  userId     String
+  area       String
+  startTime  DateTime
+  endTime    DateTime?
+  respuestas Respuesta[]
+  user       User        @relation(fields: [userId], references: [id])
+}
+
+model Pregunta {
+  id                String   @id @default(uuid())
+  texto             String
+  opciones          Json
+  respuestaCorrecta String
+}
+
+model Respuesta {
+  id           String     @id @default(uuid())
+  simulacroId  String
+  pregunta     String
+  respuesta    String
+  correcta     Boolean
+  simulacro    Simulacro  @relation(fields: [simulacroId], references: [id])
+}
