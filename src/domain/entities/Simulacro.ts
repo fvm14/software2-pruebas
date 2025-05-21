@@ -4,12 +4,12 @@ export class Simulacro {
     public readonly area: string,
     public readonly startTime: Date,
     public readonly endTime: Date | null,
-    public readonly id?: string // 👈 opcional
+    public readonly id?: string
   ) {}
 
   static crear(userId: string, area: string): Simulacro {
     const startTime = new Date();
-    const endTime = new Date(startTime.getTime() + 120 * 60000); // +120 min
+    const endTime = new Date(startTime.getTime() + 120 * 60000);
     return new Simulacro(userId, area, startTime, endTime);
   }
 }
